@@ -1,40 +1,29 @@
 // Add imports above this line
-import { galleryItems } from './gallery-items';
-// Change code below this line
-const galleryEl = document.querySelector('.gallery');
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
+import { galleryItems } from './gallery-items.js';
+
+const galleryEl = document.querySelector('.gallery');
 const galleryItemsMarkup = createGallery(galleryItems);
-galleryEl.insertAdjacentHTML('beforeend', galleryItemsMarkup);
 
 function createGallery(items) {
   return items
     .map(({ preview, original, description }) => {
       return `<li class="gallery__item">
-  <a class="gallery__link" href="${original}">
-    <img
-      class="gallery__image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
+   <a class="gallery__link" href="${original}">
+      <img class="gallery__image" src="${preview}" alt="${description}" />
+   </a>
 </li>`;
     })
     .join('');
 }
 
-galleryEl.addEventListener('click', onImgClick);
+galleryEl.insertAdjacentHTML('beforeend', galleryItemsMarkup);
 
-const instance = basicLightbox.create(
-  `<img width="1280" height="auto" src="">`
-);
-
-function onImgClick(e) {
-  e.preventDefault();
-  const datasetSource = e.target.dataset.source;
-  if (!datasetSource) return;
-  instance.element().querySelector('img').src = datasetSource;
-  instance.show();
-}
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 console.log(galleryItems);
