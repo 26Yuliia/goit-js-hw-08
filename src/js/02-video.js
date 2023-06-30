@@ -18,8 +18,6 @@ player.on('timeupdate', throttle(getCurrentTime, 1000));
 
 player.setCurrentTime(JSON.parse(localStorage.getItem(CURRENT_TIME_KEY)) || 0);
 
-console.log(time);
-
 //player.on('play', function () {
 //  console.log('played the video!');
 //});
